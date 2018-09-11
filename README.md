@@ -2,7 +2,7 @@
 
 # Introduction 
 
-The code in repository is extracted form [iotaledger/entangled](https://github.com/iotaledger/entangled), [XKCP/XKCP](https://github.com/XKCP/XKCP) and [ThrowTheSwitch/Unity](https://github.com/ThrowTheSwitch/Unity).
+The repository is extracted form [iotaledger/entangled](https://github.com/iotaledger/entangled), [XKCP/XKCP](https://github.com/XKCP/XKCP) and [ThrowTheSwitch/Unity](https://github.com/ThrowTheSwitch/Unity).
 
 Here are seed-related IOTA API fucntions:
 * iota_sign_address_gen
