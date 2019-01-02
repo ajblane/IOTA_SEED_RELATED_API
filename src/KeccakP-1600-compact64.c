@@ -23,6 +23,9 @@ Please refer to LowLevel.build for the exact list of other files it must be comb
 #include "KeccakP-1600-SnP.h"
 #include "SnP-Relaned.h"
 
+#pragma GCC diagnostic ignored "-Wmissing-prototypes"
+#pragma GCC diagnostic ignored "-Wcast-align"
+
 #define USE_MEMSET
 /* #define DIVISION_INSTRUCTION */ /* comment if no division instruction or more compact when not using division */
 #define UNROLL_CHILOOP        /* comment more compact using for loop */

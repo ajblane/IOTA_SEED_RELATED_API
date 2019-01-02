@@ -15,6 +15,8 @@
 #include "iss_kerl.h"
 #include "trit_tryte.h"
 
+#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
+
 char* iota_sign_address_gen(char const* const seed,
                                         size_t const index,
                                         size_t const security) {

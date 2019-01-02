@@ -11,6 +11,10 @@
 #include "bigint.h"
 #include "converter.h"
 
+#pragma GCC diagnostic ignored "-Wmissing-prototypes"
+#pragma GCC diagnostic ignored "-Wcast-align"
+#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
+
 #define INT_LEN 12
 #define BYTE_LEN 48
 #define BYTE_LEN_2 24

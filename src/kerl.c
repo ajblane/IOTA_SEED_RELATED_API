@@ -10,6 +10,9 @@
 #include "converter.h"
 #include "kerl.h"
 
+#pragma GCC diagnostic ignored "-Wcast-align"
+#pragma GCC diagnostic ignored "-Wstrict-aliasing"
+
 #define RATE 832
 #define CAPACITY (1600 - RATE)
 #define HASH_BIT_LEN 384

@@ -8,6 +8,9 @@
 #include <string.h>
 #include "add.h"
 
+#pragma GCC diagnostic ignored "-Wdeclaration-after-statement"
+#pragma GCC diagnostic ignored "-Wsign-compare"
+
 #define MAX_TRYTE_VALUE 13
 #define MIN_TRYTE_VALUE -13
 #define TRYTE_WIDTH 3
