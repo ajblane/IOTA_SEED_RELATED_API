@@ -1,0 +1,196 @@
+CC      = $(CROSS_COMPILE)gcc
+CXX     = $(CROSS_COMPILE)g++
+LD      = $(CROSS_COMPILE)ld
+AR      = $(CROSS_COMPILE)ar
+NM      = $(CROSS_COMPILE)nm
+OBJCOPY = $(CROSS_COMPILE)objcopy
+OBJDUMP = $(CROSS_COMPILE)objdump
+READELF = $(CROSS_COMPILE)readelf
+
+OBJS = external/entangled/common/curl-p/hashcash.o \
+       response/ta_send_transfer.o \
+       external/entangled/cclient/request/find_transactions.o \
+       response/ta_get_tips.o \
+       external/entangled/cclient/request/add_neighbors.o \
+       external/entangled/cclient/http/http.o \
+       external/boost/libs/container/src/unsynchronized_pool_resource.o \
+       external/entangled/cclient/response/get_neighbors.o \
+       apis.o \
+       external/entangled/common/kerl/converter.o \
+       external/entangled/common/curl-p/const.o \
+       external/entangled/common/errors.o \
+       external/boost/libs/regex/src/usinstances.o \
+       external/entangled/cclient/request/get_transactions_to_approve.o \
+       external/entangled/common/trinary/trit_ptrit.o \
+       external/served/src/served/request_parser.o \
+       external/boost/libs/system/src/error_code.o \
+       external/boost/libs/container/src/pool_resource.o \
+       external/entangled/cclient/request/get_inclusion_state.o \
+       external/entangled/utils/containers/hash/hash8019_queue.o \
+       external/entangled/cclient/service.o \
+       external/entangled/cclient/response/get_transactions_to_approve.o \
+       response/ta_find_transactions_obj.o \
+       external/boost/libs/chrono/src/chrono.o \
+       external/entangled/common/curl-p/pearl_diver.o \
+       external/served/src/served/plugins/access_log.o \
+       external/boost/libs/regex/src/w32_regex_traits.o \
+       external/entangled/cclient/response/check_consistency.o \
+       external/served/src/served/multiplexer.o \
+       external/boost/libs/exception/src/clone_current_exception_non_intrusive.o \
+       external/boost/libs/regex/src/regex_debug.o \
+       external/entangled/utils/logger_helper.o \
+       external/entangled/cclient/request/get_trytes.o \
+       external/entangled/common/trinary/trit_array.o \
+       external/boost/libs/regex/src/instances.o \
+       external/keccak/Constructions/KeccakSpongeWidth1600.o \
+       external/boost/libs/regex/src/icu.o \
+       external/entangled/common/kerl/bigint.o \
+       external/boost/libs/regex/src/regex_traits_defaults.o \
+       external/http_parser/http_parser.o \
+       external/entangled/common/kerl/kerl.o \
+       external/entangled/common/curl-p/ptrit.o \
+       external/entangled/cclient/request/attach_to_tangle.o \
+       external/entangled/cclient/iota_client_core_api.o \
+       external/served/src/served/net/connection_manager.o \
+       external/keccak/Modes/KeccakHash.o \
+       external/entangled/cclient/response/attach_to_tangle.o \
+       external/entangled/cclient/request/store_transactions.o \
+       external/entangled/common/trinary/ptrit_incr.o \
+       external/boost/libs/regex/src/wc_regex_traits.o \
+       external/boost/libs/chrono/src/process_cpu_clocks.o \
+       external/boost/libs/regex/src/cregex.o \
+       response/ta_get_transaction_object.o \
+       external/entangled/common/helpers/digest.o \
+       request/ta_send_transfer.o \
+       external/entangled/cclient/request/broadcast_transactions.o \
+       external/boost/libs/regex/src/regex.o \
+       external/entangled/cclient/response/get_trytes.o \
+       external/entangled/common/pow/pow.o \
+       external/entangled/cclient/response/add_neighbors.o \
+       external/served/src/served/net/connection.o \
+       external/served/src/served/net/server.o \
+       response/ta_find_transactions.o \
+       external/boost/libs/regex/src/c_regex_traits.o \
+       external/entangled/cclient/response/get_node_info.o \
+       external/entangled/network/sockets.o \
+       external/boost/libs/regex/src/regex_raw_buffer.o \
+       external/entangled/common/kerl/hash.o \
+       external/boost/libs/regex/src/posix_api.o \
+       external/entangled/cclient/response/get_tips.o \
+       external/entangled/cclient/response/get_inclusion_state.o \
+       external/entangled/utils/containers/hash/hash243_stack.o \
+       external/entangled/utils/containers/hash/hash81_queue.o \
+       external/boost/libs/container/src/global_resource.o \
+       external/served/src/served/request.o \
+       external/served/src/served/parameters.o \
+       external/entangled/cclient/request/remove_neighbors.o \
+       external/boost/libs/regex/src/static_mutex.o \
+       external/entangled/utils/system.o \
+       external/boost/libs/container/src/dlmalloc_ext_2_8_6.o \
+       external/entangled/common/trinary/trit_tryte.o \
+       external/entangled/common/trinary/flex_trit.o \
+       external/boost/libs/container/src/monotonic_buffer_resource.o \
+       external/entangled/cclient/serialization/json/json_serializer.o \
+       external/served/src/served/mux/variable_matcher.o \
+       external/served/src/served/request_parser_impl.o \
+       external/boost/libs/regex/src/wide_posix_api.o \
+       external/entangled/cclient/types/types.o \
+       external/served/src/served/uri.o \
+       external/entangled/cclient/request/get_balances.o \
+       external/entangled/utils/containers/hash/hash8019_stack.o \
+       common_core.o \
+       external/entangled/cclient/iota_client_extended_api.o \
+       external/entangled/cclient/response/remove_neighbors.o \
+       external/boost/libs/container/src/synchronized_pool_resource.o \
+       external/entangled/common/trinary/add.o \
+       external/cJSON/cJSON.o \
+       external/entangled/common/curl-p/curl_p.o \
+       external/served/src/served/mux/regex_matcher.o \
+       external/entangled/common/trinary/trit_byte.o \
+       external/served/src/served/methods_handler.o \
+       external/boost/libs/container/src/dlmalloc.o \
+       external/boost/libs/regex/src/winstances.o \
+       external/boost/libs/chrono/src/thread_clock.o \
+       external/entangled/cclient/response/get_balances.o \
+       external/entangled/common/helpers/sign.o \
+       external/cJSON/cJSON_Utils.o \
+       external/entangled/utils/containers/hash/hash243_queue.o \
+       external/entangled/common/sign/v1/iss_kerl.o \
+       external/entangled/common/trinary/trit_long.o \
+       external/boost/libs/regex/src/fileiter.o \
+       external/served/src/served/status.o \
+       external/boost/libs/regex/src/cpp_regex_traits.o \
+       external/entangled/common/helpers/pow.o \
+       external/entangled/cclient/request/check_consistency.o \
+       external/served/src/served/mux/static_matcher.o \
+       external/keccak/SnP/KeccakP-1600/Reference/KeccakP-1600-reference.o \
+       external/entangled/utils/time.o \
+       external/entangled/common/helpers/checksum.o \
+       external/served/src/served/response.o \
+       serializer/serializer.o \
+       external/entangled/cclient/response/find_transactions.o \
+       external/entangled/utils/containers/hash/hash_array.o \
+       external/entangled/common/model/transaction.o \
+       external/entangled/common/curl-p/digest.o \
+       response/ta_generate_address.o \
+       external/com_github_embear_logger/src/logger.o \
+
+TESTOBJ = external/unity/src/unity.o \
+       test_serializer.o \
+       #main.o \
+       #server.o \
+
+CFLAGS += -Wall -I../ta/include -I$(TEEC_EXPORT)/include -I./include \
+         -iquote ./ \
+         -iquote ./external/entangled \
+         -iquote ./external/entangled/cclient \
+         -iquote ./external/entangled/common \
+         -iquote ./external/entangled/utils \
+         -iquote ./external/com_github_uthash/include \
+         -iquote ./external/com_github_embear_logger/include \
+         -iquote ./external/http_parser \
+         -iquote ./serializer \
+         -iquote ./external/cJSON \
+         -I./external/keccak/_virtual_includes/keccak \
+         -I./external/keccak/_virtual_includes/keccak_sponge_1600\
+         -I./external/keccak/_virtual_includes/keccak_sponge_common \
+         -I./external/keccak/_virtual_includes/snp_1600_reference \
+         -I./external/keccak/_virtual_includes/common \
+         -I./external/boost \
+         -I./external/unity/_virtual_includes/unity \
+
+         #-I./external/entangled/common/kerl \
+       
+CXXFLAGS += -Wall -I../ta/include -I$(TEEC_EXPORT)/include -I./include \
+         -iquote ./ \
+         -iquote ./external/entangled \
+         -iquote ./external/entangled/cclient \
+         -iquote ./external/entangled/common \
+         -iquote ./external/entangled/utils \
+         -iquote ./external/com_github_uthash/include \
+         -iquote ./external/com_github_embear_logger/include \
+         -iquote ./serializer \
+         -iquote ./external/cJSON \
+         -I./external/keccak/_virtual_includes/keccak \
+         -I./external/keccak/_virtual_includes/keccak_sponge_1600\
+         -I./external/keccak/_virtual_includes/keccak_sponge_common \
+         -I./external/keccak/_virtual_includes/snp_1600_reference \
+         -I./external/keccak/_virtual_includes/common \
+         -I./external \
+         -I./external/boost \
+         -I./external/served/_virtual_includes/served \
+        
+#Add/link other required libraries here
+LDADD += -lteec -L$(TEEC_EXPORT)/lib -lpthread -lstdc++ -lm
+
+BINARY = optee_example_hello_world
+
+.PHONY: all
+all: $(BINARY)
+
+$(BINARY): $(OBJS) $(TESTOBJ)
+	$(CC) -o $@ $(OBJS) $(TESTOBJ) $(LDADD)
+
+.PHONY: clean
+clean:
+	rm -f $(OBJS) $(BINARY)
