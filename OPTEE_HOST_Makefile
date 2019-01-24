@@ -202,7 +202,7 @@ CFLAGS += -Wall -I../ta/include -I$(TEEC_EXPORT)/include -I./include \
          -iquote ./external/entangled/common \
          -iquote ./external/entangled/utils \
          -iquote ./external/com_github_uthash/include \
-         -iquote ./external/com_google_goolgetest/goolgemock/inlcude \
+         -iquote ./external/com_github_embear_logger/include \
          -iquote ./external/http_parser \
          -iquote ./serializer \
          -iquote ./external/cJSON \
