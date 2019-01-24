@@ -134,12 +134,67 @@ OBJS = external/entangled/common/curl-p/hashcash.o \
        external/entangled/common/curl-p/digest.o \
        response/ta_generate_address.o \
        external/com_github_embear_logger/src/logger.o \
+       external/entangled/common/trinary/tryte_ascii.o \
+       external/entangled/common/trinary/flex_trit_array.o \
 
-TESTOBJ = external/unity/src/unity.o \
+TESTOBJ = \
+       external/unity/src/unity.o \
+       external/unity/src/unity_fixture.o \
        test_serializer.o \
        #main.o \
        #server.o \
 
+TESTTRYTEASCIIOBJ = \
+       external/unity/src/unity.o \
+       external/unity/src/unity_fixture.o \
+       test_tryte_ascii.o
+
+test_trit_tryte_obj = \
+       external/unity/src/unity.o \
+       external/unity/src/unity_fixture.o \
+       test_trit_tryte.o
+
+test_trit_ptrit_obj = \
+       external/unity/src/unity.o \
+       external/unity/src/unity_fixture.o \
+       test_trit_ptrit.o
+
+test_trit_long_obj = \
+       external/unity/src/unity.o \
+       external/unity/src/unity_fixture.o \
+       test_trit_long.o
+
+test_trit_byte_obj = \
+       external/unity/src/unity.o \
+       external/unity/src/unity_fixture.o \
+       test_trit_byte.o
+
+test_trit_array_obj = \
+       external/unity/src/unity.o \
+       external/unity/src/unity_fixture.o \
+       test_trit_array.o
+
+test_flex_trit_obj = \
+       external/unity/src/unity.o \
+       external/unity/src/unity_fixture.o \
+       test_flex_trit.o
+
+test_google_test_obj = \
+       external/com_google_googletest/googlemock/src/gmock_main.o \
+       external/com_google_googletest/googletest/src/gtest-filepath.o \
+       external/com_google_googletest/googletest/src/gtest.o \
+       external/com_google_googletest/googletest/src/gtest-port.o \
+       external/com_google_googletest/googletest/src/gtest-typed-test.o \
+       external/com_google_googletest/googlemock/src/gmock.o \
+       external/com_google_googletest/googlemock/src/gmock-spec-builders.o \
+       external/com_google_googletest/googletest/src/gtest-death-test.o \
+       external/com_google_googletest/googlemock/src/gmock-cardinalities.o \
+       external/com_google_googletest/googlemock/src/gmock-matchers.o \
+       external/com_google_googletest/googletest/src/gtest-printers.o \
+       external/com_google_googletest/googletest/src/gtest-test-part.o \
+       external/com_google_googletest/googlemock/src/gmock-internal-utils.o \
+       external/entangled/common/trinary/tests/test_flex_trit_array.o \
+       
 CFLAGS += -Wall -I../ta/include -I$(TEEC_EXPORT)/include -I./include \
          -iquote ./ \
          -iquote ./external/entangled \
@@ -147,7 +202,7 @@ CFLAGS += -Wall -I../ta/include -I$(TEEC_EXPORT)/include -I./include \
          -iquote ./external/entangled/common \
          -iquote ./external/entangled/utils \
          -iquote ./external/com_github_uthash/include \
-         -iquote ./external/com_github_embear_logger/include \
+         -iquote ./external/com_google_goolgetest/goolgemock/inlcude \
          -iquote ./external/http_parser \
          -iquote ./serializer \
          -iquote ./external/cJSON \
@@ -169,8 +224,12 @@ CXXFLAGS += -Wall -I../ta/include -I$(TEEC_EXPORT)/include -I./include \
          -iquote ./external/entangled/utils \
          -iquote ./external/com_github_uthash/include \
          -iquote ./external/com_github_embear_logger/include \
+         -iquote ./external/com_google_googletest/googlemock/include \
+         -iquote ./external/com_google_googletest/googletest/include \
+         -iquote ./external/com_google_googletest/googletest \
          -iquote ./serializer \
          -iquote ./external/cJSON \
+         -I./external/com_google_googletest/googletest/include \
          -I./external/keccak/_virtual_includes/keccak \
          -I./external/keccak/_virtual_includes/keccak_sponge_1600\
          -I./external/keccak/_virtual_includes/keccak_sponge_common \
@@ -184,12 +243,52 @@ CXXFLAGS += -Wall -I../ta/include -I$(TEEC_EXPORT)/include -I./include \
 LDADD += -lteec -L$(TEEC_EXPORT)/lib -lpthread -lstdc++ -lm
 
 BINARY = optee_example_hello_world
+TRYTEASCIIOBINARY = optee_example_test_tryte_acsii
+test_trit_tryte_binary = optee_example_test_trit_tryte
+test_trit_ptrit_binary = optee_example_test_trit_ptrit
+test_trit_long_binary = optee_example_test_trit_long
+test_trit_byte_binary = optee_example_test_trit_byte
+test_trit_array_binary = optee_example_test_trit_array
+test_flex_trit_binary = optee_example_test_flex_trit
+test_google_test_binary = optee_example_google_test
 
 .PHONY: all
-all: $(BINARY)
+all: $(BINARY) $(TESTTRINARY) \
+     $(test_trit_tryte_binary) \
+     $(test_trit_ptrit_binary) \
+     $(test_trit_long_binary) \
+     $(test_trit_byte_binary) \
+     $(test_trit_array_binary) \
+     $(test_flex_trit_binary) \
+     $(test_google_test_binary) \
 
 $(BINARY): $(OBJS) $(TESTOBJ)
 	$(CC) -o $@ $(OBJS) $(TESTOBJ) $(LDADD)
+
+$(TRYTEASCIIOBINARY): $(OBJS) $(TESTTRYTEASCIIOBJ)
+	$(CC) -o $@ $(OBJS) $(TESTTRYTEASCIIOBJ) $(LDADD)
+
+$(test_trit_tryte_binary): $(OBJS) $(test_trit_tryte_obj) 
+	$(CC) -o $@ $(OBJS) $(test_trit_tryte_obj) $(LDADD)
+
+$(test_trit_ptrit_binary): $(OBJS) $(test_trit_ptrit_obj)
+	$(CC) -o $@ $(OBJS) $(test_trit_ptrit_obj) $(LDADD)
+
+$(test_trit_long_binary): $(OBJS) $(test_trit_long_obj)
+	$(CC) -o $@ $(OBJS) $(test_trit_long_obj) $(LDADD)
+
+$(test_trit_byte_binary): $(OBJS) $(test_trit_byte_obj)
+	$(CC) -o $@ $(OBJS) $(test_trit_byte_obj) $(LDADD)
+
+$(test_trit_array_binary): $(OBJS) $(test_trit_array_obj)
+	$(CC) -o $@ $(OBJS) $(test_trit_array_obj) $(LDADD)
+
+$(test_flex_trit_binary): $(OBJS) $(test_flex_trit_obj)
+	$(CC) -o $@ $(OBJS) $(test_flex_trit_obj) $(LDADD)
+
+$(test_google_test_binary): $(OBJS) $(test_google_test_obj)
+	$(CC) -o $@ $(OBJS) $(test_google_test_obj) $(LDADD)
+
 
 .PHONY: clean
 clean:
