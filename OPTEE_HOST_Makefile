@@ -140,11 +140,11 @@ OBJS = external/entangled/common/curl-p/hashcash.o \
 TESTOBJ = \
        external/unity/src/unity.o \
        external/unity/src/unity_fixture.o \
-       test_serializer.o \
+       serializer/test/test_serializer.o \
        #main.o \
        #server.o \
 
-TESTTRYTEASCIIOBJ = \
+test_tryte_ascii_obj = \
        external/unity/src/unity.o \
        external/unity/src/unity_fixture.o \
        test_tryte_ascii.o
@@ -179,6 +179,26 @@ test_flex_trit_obj = \
        external/unity/src/unity_fixture.o \
        test_flex_trit.o
 
+test_hash_array_obj = \
+       external/unity/src/unity.o \
+       external/unity/src/unity_fixture.o \
+       external/entangled/utils/containers/hash/tests/test_hash_array.o
+
+test_hash_queue_obj = \
+       external/unity/src/unity.o \
+       external/unity/src/unity_fixture.o \
+       external/entangled/utils/containers/hash/tests/test_hash_queue.o
+
+test_hash_stack_obj = \
+       external/unity/src/unity.o \
+       external/unity/src/unity_fixture.o \
+       external/entangled/utils/containers/hash/tests/test_hash_stack.o
+
+test_json_obj = \
+       external/unity/src/unity.o \
+       external/unity/src/unity_fixture.o \
+       external/entangled/cclient/serialization/tests/test_json.o
+     
 test_google_test_obj = \
        external/com_google_googletest/googlemock/src/gmock_main.o \
        external/com_google_googletest/googletest/src/gtest-filepath.o \
@@ -212,6 +232,7 @@ CFLAGS += -Wall -I../ta/include -I$(TEEC_EXPORT)/include -I./include \
          -I./external/keccak/_virtual_includes/snp_1600_reference \
          -I./external/keccak/_virtual_includes/common \
          -I./external/boost \
+         -I./external/entangled \
          -I./external/unity/_virtual_includes/unity \
 
          #-I./external/entangled/common/kerl \
@@ -243,7 +264,7 @@ CXXFLAGS += -Wall -I../ta/include -I$(TEEC_EXPORT)/include -I./include \
 LDADD += -lteec -L$(TEEC_EXPORT)/lib -lpthread -lstdc++ -lm
 
 BINARY = optee_example_hello_world
-TRYTEASCIIOBINARY = optee_example_test_tryte_acsii
+test_tryte_ascii_binary = optee_example_test_tryte_acsii
 test_trit_tryte_binary = optee_example_test_trit_tryte
 test_trit_ptrit_binary = optee_example_test_trit_ptrit
 test_trit_long_binary = optee_example_test_trit_long
@@ -251,9 +272,14 @@ test_trit_byte_binary = optee_example_test_trit_byte
 test_trit_array_binary = optee_example_test_trit_array
 test_flex_trit_binary = optee_example_test_flex_trit
 test_google_test_binary = optee_example_google_test
+test_hash_array_binary = optee_example_test_hash_array
+test_hash_queue_binary = optee_example_test_hash_queue
+test_hash_stack_binary = optee_example_test_hash_stack
+test_json_obj_binary = optee_example_test_json
 
 .PHONY: all
-all: $(BINARY) $(TESTTRINARY) \
+all: $(BINARY) \
+     $(test_tryte_ascii_binary) \
      $(test_trit_tryte_binary) \
      $(test_trit_ptrit_binary) \
      $(test_trit_long_binary) \
@@ -261,12 +287,16 @@ all: $(BINARY) $(TESTTRINARY) \
      $(test_trit_array_binary) \
      $(test_flex_trit_binary) \
      $(test_google_test_binary) \
+     $(test_hash_array_binary) \
+     $(test_hash_queue_binary) \
+     $(test_hash_stack_binary) \
+     $(test_json_obj_binary) \
 
 $(BINARY): $(OBJS) $(TESTOBJ)
 	$(CC) -o $@ $(OBJS) $(TESTOBJ) $(LDADD)
 
-$(TRYTEASCIIOBINARY): $(OBJS) $(TESTTRYTEASCIIOBJ)
-	$(CC) -o $@ $(OBJS) $(TESTTRYTEASCIIOBJ) $(LDADD)
+$(test_tryte_ascii_binary): $(OBJS) $(test_tryte_ascii_obj)
+	$(CC) -o $@ $(OBJS) $(test_tryte_ascii_obj) $(LDADD)
 
 $(test_trit_tryte_binary): $(OBJS) $(test_trit_tryte_obj) 
 	$(CC) -o $@ $(OBJS) $(test_trit_tryte_obj) $(LDADD)
@@ -288,6 +318,18 @@ $(test_flex_trit_binary): $(OBJS) $(test_flex_trit_obj)
 
 $(test_google_test_binary): $(OBJS) $(test_google_test_obj)
 	$(CC) -o $@ $(OBJS) $(test_google_test_obj) $(LDADD)
+
+$(test_hash_array_binary): $(OBJS) $(test_hash_array_obj)
+	$(CC) -o $@ $(OBJS) $(test_hash_array_obj) $(LDADD)
+
+$(test_hash_queue_binary): $(OBJS) $(test_hash_queue_obj)
+	$(CC) -o $@ $(OBJS) $(test_hash_queue_obj) $(LDADD)
+
+$(test_hash_stack_binary): $(OBJS) $(test_hash_stack_obj)
+	$(CC) -o $@ $(OBJS) $(test_hash_stack_obj) $(LDADD)
+
+$(test_json_obj_binary): $(OBJS) $(test_json_obj)
+	$(CC) -o $@ $(OBJS) $(test_json_obj) $(LDADD)
 
 
 .PHONY: clean
